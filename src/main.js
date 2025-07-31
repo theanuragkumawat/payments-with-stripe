@@ -52,8 +52,7 @@ export default async (context) => {
       const session = await stripe.checkoutPayment(
         context,totalQuantity,
         userId, cartItems, addressInfo, orderStatus, paymentMethod,
-        paymentStatus, totalAmount, orderDate, orderUpdateDate,
-        paymentId, payerId, cartId, successUrl, failureUrl
+        paymentStatus, totalAmount, orderDate, cartId, successUrl, failureUrl
       );
       if (!session) {
         error('Failed to create Stripe checkout session.');

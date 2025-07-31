@@ -17,8 +17,7 @@ class StripeService {
    */
   async checkoutPayment(context, totalQuantity = 2,
     userId, cartItems, addressInfo, orderStatus, paymentMethod,
-    paymentStatus, totalAmount, orderDate, orderUpdateDate,
-    paymentId, payerId, cartId, successUrl, failureUrl) {
+    paymentStatus, totalAmount, orderDate, cartId, successUrl, failureUrl) {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
     const lineItem = {
       price_data: {
