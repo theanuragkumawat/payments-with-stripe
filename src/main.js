@@ -44,7 +44,7 @@ export default async (context) => {
 
       if (!userId) {
         error('User ID not found in request.');
-        return res.redirect(failureUrl, 303);
+        return res.redirect(failureUrl || "https://localhost:5173/login", 303);
       }
 
       const session = await stripe.checkoutPayment(
