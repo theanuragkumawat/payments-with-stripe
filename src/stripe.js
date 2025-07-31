@@ -15,7 +15,10 @@ class StripeService {
    * @param {string} successUrl
    * @param {string} failureUrl
    */
-  async checkoutPayment(context, userId, successUrl, failureUrl) {
+  async checkoutPayment(context,
+    userId, cartItems, addressInfo, orderStatus, paymentMethod,
+    paymentStatus, totalAmount, orderDate, orderUpdateDate,
+    paymentId, payerId, cartId, successUrl, failureUrl) {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
     const lineItem = {
       price_data: {
@@ -37,6 +40,14 @@ class StripeService {
         client_reference_id: userId,
         metadata: {
           userId,
+          cartItems: JSON.stringify(cartItems),
+          addressInfo:addressInfo,
+          orderStatus: orderStatus || 'pending',
+          paymentMethod: paymentMethod || 'stripe',
+          paymentStatus: paymentStatus || 'pending',
+          totalAmount: totalAmount + "",
+          orderDate: orderDate || new Date().toISOString(),
+          cartId: cartId || '',
         },
         mode: 'payment',
       });

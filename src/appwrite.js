@@ -18,16 +18,16 @@ class AppwriteService {
    * @param {string} orderId
    * @returns {Promise<void>}
    */
-  async createOrder(databaseId, collectionId, userId, orderId) {
+  async createOrder(databaseId, collectionId, userId, cartItems, addressInfo,orderStatus, paymentMethod,
+        paymentStatus,totalAmount, orderDate, orderUpdateDate,paymentId, payerId, cartId) {
     await this.databases.createDocument(
       databaseId,
       collectionId,
       ID.unique(),
       {
-        userId,
-        orderId,
-      },
-      [Permission.read(Role.user(userId))]
+        databaseId, collectionId, userId, cartItems, addressInfo,orderStatus, paymentMethod,
+        paymentStatus,totalAmount, orderDate, orderUpdateDate,paymentId, payerId, cartId
+      }
     );
   }
 

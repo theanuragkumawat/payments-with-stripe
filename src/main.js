@@ -30,12 +30,18 @@ export default async (context) => {
 
   switch (req.path) {
     case '/checkout':
+
+
+      const {
+        userId, cartItems, addressInfo, orderStatus, paymentMethod,
+        paymentStatus, totalAmount, orderDate, orderUpdateDate,
+        paymentId, payerId, cartId, successUrl, failureUrl
+      } = req.body;
+
+
       const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
 
-      const successUrl = req.body?.successUrl ?? fallbackUrl;
-      const failureUrl = req.body?.failureUrl ?? fallbackUrl;
 
-      const userId = req.headers['x-appwrite-user-id'];
       if (!userId) {
         error('User ID not found in request.');
         return res.redirect(failureUrl, 303);
@@ -43,9 +49,9 @@ export default async (context) => {
 
       const session = await stripe.checkoutPayment(
         context,
-        userId,
-        successUrl,
-        failureUrl
+        userId, cartItems, addressInfo, orderStatus, paymentMethod,
+        paymentStatus, totalAmount, orderDate, orderUpdateDate,
+        paymentId, payerId, cartId, successUrl, failureUrl
       );
       if (!session) {
         error('Failed to create Stripe checkout session.');
@@ -72,7 +78,8 @@ export default async (context) => {
         const userId = session.metadata.userId;
         const orderId = session.id;
 
-        await appwrite.createOrder(databaseId, collectionId, userId, orderId);
+        await appwrite.createOrder(databaseId, collectionId, userId, cartItems, addressInfo,orderStatus, paymentMethod,
+        paymentStatus,totalAmount, orderDate, orderUpdateDate,paymentId, payerId, cartId);
         log(
           `Created order document for user ${userId} with Stripe order ID ${orderId}`
         );
