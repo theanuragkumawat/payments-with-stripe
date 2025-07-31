@@ -39,7 +39,7 @@ export default async (context) => {
       } = req.body;
 
 
-      const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
+      // const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
 
 
       if (!userId) {
@@ -62,7 +62,7 @@ export default async (context) => {
       context.log(session);
 
       log(`Created Stripe checkout session for user ${userId}.`);
-      return res.redirect(session.url, 303);
+      return res.json({checkout_url:session.url}, 200);
 
     case '/webhook':
       const event = stripe.validateWebhook(context, req);
