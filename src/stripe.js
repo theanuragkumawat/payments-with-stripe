@@ -17,11 +17,11 @@ class StripeService {
    */
   async checkoutPayment(context, totalQuantity = 2,
     userId, cartItems, addressInfo, orderStatus, paymentMethod,
-    paymentStatus, totalAmount, orderDate, cartId, successUrl, failureUrl) {
+    paymentStatus, totalAmount, orderDate, successUrl, failureUrl) {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
     const lineItem = {
       price_data: {
-        unit_amount: parseInt(totalAmount), // $10.00
+        unit_amount: totalAmount, // $10.00
         currency: 'usd',
         product_data: {
           name: 'Product',
@@ -46,7 +46,6 @@ class StripeService {
           paymentStatus: paymentStatus || 'pending',
           totalAmount: totalAmount + "",
           orderDate: orderDate || new Date().toISOString(),
-          cartId: cartId || '',
         },
         mode: 'payment',
       });
