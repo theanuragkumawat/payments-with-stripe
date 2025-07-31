@@ -34,10 +34,8 @@ export default async (context) => {
 
       const {
         userId, cartItems, addressInfo, orderStatus, paymentMethod,
-        paymentStatus, totalAmount, orderDate, orderUpdateDate,
-        paymentId, payerId, cartId, successUrl, failureUrl
+        paymentStatus, totalAmount, orderDate, orderUpdateDate, successUrl, failureUrl
       } = JSON.parse(req.body);
-      const userData = JSON.parse(req.body)
       const totalQuantity = cartItems && cartItems.length > 0 ? cartItems?.reduce((sum,current) => sum + current?.quantity,0) : 2;
       // const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
       context.log(cartItems)
@@ -46,8 +44,6 @@ export default async (context) => {
         error('User ID not found in request.');
         return res.json({url:"http://localhost:5173/login",reqBodyy:req.body}, 303);
       }
-
-      
 
       const session = await stripe.checkoutPayment(
         context,totalQuantity,
