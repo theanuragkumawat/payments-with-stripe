@@ -21,7 +21,7 @@ class StripeService {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
     const line_items = cartItems.map(item => ({
       price_data: {
-        currency: 'usd',
+        currency: 'inr',
         product_data: {
           name: "product",
         },
