@@ -82,10 +82,10 @@ export default async (context) => {
         const userId = session.metadata.userId;
         const orderId = session.id;
 
-        await appwrite.createOrder(databaseId, collectionId, userData);
-        log(
-          `Created order document for user ${userId} with Stripe order ID ${orderId}`
-        );
+        // await appwrite.createOrder(databaseId, collectionId, userData);
+        // log(
+        //   `Created order document for user ${userId} with Stripe order ID ${orderId}`
+        // );
         return res.json({ success: true });
       }
 
