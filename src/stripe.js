@@ -15,7 +15,7 @@ class StripeService {
    * @param {string} successUrl
    * @param {string} failureUrl
    */
-  async checkoutPayment(context, totalQuantity = 2,
+  async checkoutPayment(context,
     userId, cartItems, addressInfo, orderStatus, paymentMethod,
     paymentStatus, totalAmount, orderDate, successUrl, failureUrl) {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
@@ -25,7 +25,7 @@ class StripeService {
         product_data: {
           name: "product",
         },
-        unit_amount: item.price, // price in cents
+        unit_amount: item.price * 100, // price in cents
       },
       quantity: item.quantity,
     }));

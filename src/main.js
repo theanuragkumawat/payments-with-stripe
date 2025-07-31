@@ -36,18 +36,16 @@ export default async (context) => {
         userId, cartItems, addressInfo, orderStatus, paymentMethod,
         paymentStatus, totalAmount, orderDate, orderUpdateDate, successUrl, failureUrl
       } = JSON.parse(req.body);
-      const totalQuantity = cartItems && cartItems.length > 0 ? cartItems?.reduce((sum,current) => sum + current?.quantity,0) : 2;
       // const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
       context.log(cartItems)
 
       if (!userId) {
         error('User ID not found in request.');
-        return res.json({url:"http://localhost:5173/login",reqBodyy:req.body}, 303);
+        return res.json({ url: "http://localhost:5173/login", reqBodyy: req.body }, 303);
       }
 
       const session = await stripe.checkoutPayment(
-        context,totalQuantity,
-        userId, cartItems, addressInfo, orderStatus, paymentMethod,
+        context, userId, cartItems, addressInfo, orderStatus, paymentMethod,
         paymentStatus, totalAmount, orderDate, successUrl, failureUrl
       );
       if (!session) {
@@ -59,7 +57,7 @@ export default async (context) => {
       context.log(session);
 
       log(`Created Stripe checkout session for user ${userId}.`);
-      return res.json({checkout_url:session.url}, 200);
+      return res.json({ checkout_url: session.url }, 200);
 
     case '/webhook':
       const event = stripe.validateWebhook(context, req);
@@ -72,7 +70,7 @@ export default async (context) => {
 
       if (event.type === 'checkout.session.completed') {
         console.log("checkout.session.completed Par H Ab");
-        
+
         const session = event.data.object;
         const userId = session.metadata.userId;
         const orderId = session.id;
