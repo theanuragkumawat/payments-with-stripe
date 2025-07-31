@@ -40,7 +40,7 @@ export default async (context) => {
 
 
       // const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
-
+      context.log(cartItems)
 
       if (!userId) {
         error('User ID not found in request.');
