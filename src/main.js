@@ -62,7 +62,7 @@ export default async (context) => {
       context.log(session);
 
       log(`Created Stripe checkout session for user ${userId}.`);
-      return res.redirect(session.url, 303);
+      return res.json({checkout_url:session.url}, 303);
 
     case '/webhook':
       const event = stripe.validateWebhook(context, req);
