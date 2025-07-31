@@ -23,9 +23,9 @@ class StripeService {
       price_data: {
         currency: 'inr',
         product_data: {
-          name: "product",
+          name: item.title,
         },
-        unit_amount: item.price * 100, // price in cents
+        unit_amount: item.price * 100, // price in paisa
       },
       quantity: item.quantity,
     }));
