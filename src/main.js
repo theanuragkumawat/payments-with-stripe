@@ -44,7 +44,7 @@ export default async (context) => {
 
       if (!userId) {
         error('User ID not found in request.');
-        return res.json({url:"localhost:5173/login"}, 302);
+        return res.json({url:"localhost:5173/login"}, 303);
       }
 
       const session = await stripe.checkoutPayment(
