@@ -22,13 +22,13 @@ class StripeService {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
     const lineItem = {
       price_data: {
-        unit_amount: 1000, // $10.00
+        unit_amount: parseInt(totalAmount), // $10.00
         currency: 'usd',
         product_data: {
           name: 'Product',
         },
       },
-      quantity: 1,
+      quantity: 2,
     };
 
     try {
