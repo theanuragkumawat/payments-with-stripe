@@ -36,7 +36,7 @@ export default async (context) => {
         userId, cartItems, addressInfo, orderStatus, paymentMethod,
         paymentStatus, totalAmount, orderDate, orderUpdateDate,
         paymentId, payerId, cartId, successUrl, failureUrl
-      } = req.body;
+      } = JSON.parse(req.body);
 
 
       // const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
