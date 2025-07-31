@@ -18,15 +18,15 @@ class AppwriteService {
    * @param {string} orderId
    * @returns {Promise<void>}
    */
-  async createOrder(databaseId, collectionId, userId, cartItems, addressInfo,orderStatus, paymentMethod,
-        paymentStatus,totalAmount, orderDate, orderUpdateDate,paymentId, payerId, cartId) {
+  async createOrder(databaseId, collectionId, { userId, cartItems, addressInfo, orderStatus, paymentMethod,
+    paymentStatus, totalAmount, orderDate, orderUpdateDate, paymentId, payerId, cartId }) {
     await this.databases.createDocument(
       databaseId,
       collectionId,
       ID.unique(),
       {
-        databaseId, collectionId, userId, cartItems, addressInfo,orderStatus, paymentMethod,
-        paymentStatus,totalAmount, orderDate, orderUpdateDate,paymentId, payerId, cartId
+        databaseId:databaseId, collectionId:collectionId, userId,cartItems:JSON.stringify(cartItems), addressInfo, orderStatus, paymentMethod,
+        paymentStatus, totalAmount:JSON.stringify(totalAmount), orderDate, orderUpdateDate, paymentId, payerId, cartId
       }
     );
   }

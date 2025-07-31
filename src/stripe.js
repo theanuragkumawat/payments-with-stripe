@@ -15,7 +15,7 @@ class StripeService {
    * @param {string} successUrl
    * @param {string} failureUrl
    */
-  async checkoutPayment(context,
+  async checkoutPayment(context, totalQuantity = 2,
     userId, cartItems, addressInfo, orderStatus, paymentMethod,
     paymentStatus, totalAmount, orderDate, orderUpdateDate,
     paymentId, payerId, cartId, successUrl, failureUrl) {
@@ -28,7 +28,7 @@ class StripeService {
           name: 'Product',
         },
       },
-      quantity: 2,
+      quantity: totalQuantity,
     };
 
     try {

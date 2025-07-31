@@ -37,8 +37,8 @@ export default async (context) => {
         paymentStatus, totalAmount, orderDate, orderUpdateDate,
         paymentId, payerId, cartId, successUrl, failureUrl
       } = JSON.parse(req.body);
-
-
+      const userData = JSON.parse(req.body)
+      const totalQuantity = cartItems && cartItems.length > 0 ? cartItems?.reduce((sum,current) => sum + current?.quantity,0) : 2;
       // const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
       context.log(cartItems)
 
@@ -47,8 +47,10 @@ export default async (context) => {
         return res.json({url:"http://localhost:5173/login",reqBodyy:req.body}, 303);
       }
 
+      
+
       const session = await stripe.checkoutPayment(
-        context,
+        context,totalQuantity,
         userId, cartItems, addressInfo, orderStatus, paymentMethod,
         paymentStatus, totalAmount, orderDate, orderUpdateDate,
         paymentId, payerId, cartId, successUrl, failureUrl
@@ -74,12 +76,13 @@ export default async (context) => {
       context.log(event);
 
       if (event.type === 'checkout.session.completed') {
+        console.log("checkout.session.completed Par H Ab");
+        
         const session = event.data.object;
         const userId = session.metadata.userId;
         const orderId = session.id;
 
-        await appwrite.createOrder(databaseId, collectionId, userId, cartItems, addressInfo,orderStatus, paymentMethod,
-        paymentStatus,totalAmount, orderDate, orderUpdateDate,paymentId, payerId, cartId);
+        await appwrite.createOrder(databaseId, collectionId, userData);
         log(
           `Created order document for user ${userId} with Stripe order ID ${orderId}`
         );
