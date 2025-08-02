@@ -37,7 +37,7 @@ export default async (context) => {
         paymentStatus, totalAmount, orderDate, orderUpdateDate, successUrl, failureUrl
       } = JSON.parse(req.body);
       // const fallbackUrl = req.scheme + '://' + req.headers['host'] + '/';
-      context.log(cartItems)
+      // context.log(cartItems)
 
       if (!userId) {
         error('User ID not found in request.');

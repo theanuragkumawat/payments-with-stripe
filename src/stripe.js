@@ -19,32 +19,26 @@ class StripeService {
     userId, cartItems, addressInfo, orderStatus, paymentMethod,
     paymentStatus, totalAmount, orderDate, successUrl, failureUrl) {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
-    // const line_items = cartItems.map(item => ({
-    //   price_data: {
-    //     currency: 'inr',
-    //     product_data: {
-    //       name: item.title,
-    //     },
-    //     unit_amount: item.price * 100, // price in paisa
-    //   },
-    //   quantity: item.quantity,
-    // }));
+    context.log("Cart", cartItems)
 
-    const line_items = {
+    const line_items = cartItems.map(item => ({
       price_data: {
         currency: 'inr',
         product_data: {
-          name: "fgdd",
+          name: item.title,
         },
-        unit_amount: 200 * 100, // price in paisa
+        unit_amount: Math.round(item.price * 100), // ensures it's integer
       },
-      quantity: 2,
-    }
+      quantity: item.quantity,
+    }));
+
+
+    context.log("Line", line_items)
 
     try {
       return await this.client.checkout.sessions.create({
         payment_method_types: ['card'],
-        line_items: [line_items],
+        line_items: line_items,
         success_url: successUrl,
         cancel_url: failureUrl,
         client_reference_id: userId,
