@@ -17,7 +17,7 @@ class StripeService {
    */
   async checkoutPayment(context,
     userId, cartItems, addressInfo, orderStatus, paymentMethod,
-    paymentStatus, totalAmount, orderDate, successUrl, failureUrl, discount) {
+    paymentStatus, totalAmount, orderDate, successUrl, failureUrl) {
     /** @type {import('stripe').Stripe.Checkout.SessionCreateParams.LineItem} */
     const line_items = cartItems.map(item => ({
       price_data: {
@@ -29,19 +29,6 @@ class StripeService {
       },
       quantity: item.quantity,
     }));
-
-    if (discount > 0) {
-      line_items.push({
-        price_data: {
-          currency: 'inr',
-          product_data: {
-            name: 'DISCOUNT',
-          },
-          unit_amount: -discount * 100, // negative amount in paisa
-        },
-        quantity: 1,
-      });
-    }
 
     try {
       return await this.client.checkout.sessions.create({
