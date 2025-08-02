@@ -22,7 +22,7 @@ class StripeService {
     const line_items = cartItems.map(item => ({
       price_data: {
         currency: 'inr',
-        product_data: {
+        product: {
           name: item.title,
         },
         unit_amount: item.price * 100, // price in paisa
